@@ -6,7 +6,8 @@ public class Main
 	{
 		
 		System.out.println("Hello World!");
-		
+		Notation n = new Notation();
+		Notation.toRPN("a23123", ExpType.NORMAL);
 	}
 
 }
