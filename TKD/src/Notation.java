@@ -21,7 +21,6 @@ public class Notation
 			{
 				s = expression.substring(0, 1);
 				expression = expression.substring(1, expression.length());
-				System.out.print(expression);
 			}
 			case RPN: return expression;
 			default: return null;
