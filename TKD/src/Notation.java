@@ -1,5 +1,4 @@
 import java.util.LinkedList;
-import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -14,7 +13,7 @@ public class Notation
 	{
 		
 	}
-	public static String toRPN(String expression,ExpType type)
+	public static String toRPN(String expression,ExpType type) throws IllegalArgumentException
 	{
 		String s;
 		Stack<String> stack = new Stack<String>();
@@ -29,10 +28,10 @@ public class Notation
 					expression = expression.substring(1, expression.length());
 					if(Notation.isNumber(s))
 						queue.offer(s);
-					else
-					{
+					else if(Notation.isVariable(s))
+						queue.offer(s);
+					else if (!s.equals(" "))
 						queue.offer(" ");
-					}
 					if(Notation.isOperation(s))
 					{
 						while(!stack.isEmpty())
@@ -47,7 +46,10 @@ public class Notation
 						while(!stack.isEmpty())
 						{
 							if(!Notation.isLBRACKET(stack.peek()))
+							{
 								queue.offer(stack.pop());
+								if(stack.isEmpty()) throw new IllegalArgumentException("jest zamkniecie naiwasu , nie ma otwarcia");
+							}
 							else
 							{
 								stack.pop();
@@ -56,7 +58,7 @@ public class Notation
 						}	
 				}
 				while(!stack.isEmpty())
-					queue.offer(stack.pop());
+					queue.offer(" "+stack.pop());
 				s="";
 				while(!queue.isEmpty())
 					s+=queue.poll();
@@ -65,7 +67,8 @@ public class Notation
 			case RPN: return expression;
 			default: return null;
 		}
-	}	
+	}
+	
 	public static String toNormal(String expression,ExpType type)
 	{
 		switch(type)
@@ -81,9 +84,17 @@ public class Notation
 	
 	private static boolean isNumber(String s)
 	{
-		for(Number num: Number.values())
-			if(s.equals(num.num))
-				return true;
+		if(s.codePointAt(0)>=48 & s.codePointAt(0)<=57)
+			return true;
+		return false;
+	}
+	
+	private static boolean isVariable(String s)
+	{
+		if(s.codePointAt(0)>=97 & s.codePointAt(0)<=122)
+			return true;
+		else if(s.codePointAt(0)>=65 & s.codePointAt(0)<=90)
+			return true;
 		return false;
 	}
 	
