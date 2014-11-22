@@ -1,5 +1,5 @@
 
 public enum ExpType {
-	NORMAL,
+	INFIX,
 	RPN;
 }

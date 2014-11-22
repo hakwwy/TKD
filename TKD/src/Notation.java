@@ -7,8 +7,6 @@ public class Notation
 {
 	//polishNotation - PN
 	//reversePolishNotation - RPN
-
-
 	Notation()
 	{
 		
@@ -20,7 +18,7 @@ public class Notation
 		Queue<String> queue = new LinkedList<String>();
 		switch(type)
 		{
-			case NORMAL:
+			case INFIX:
 			{
 				while(!expression.isEmpty())
 				{
@@ -69,7 +67,7 @@ public class Notation
 		}
 	}
 	
-	public static String toNormal(String expression,ExpType type)
+	public static String toInfix(String expression,ExpType type)
 	{
 		switch(type)
 		{
@@ -77,7 +75,7 @@ public class Notation
 			{
 				
 			}
-			case NORMAL: return expression;
+			case INFIX: return expression;
 			default: return null;
 		}
 	}
